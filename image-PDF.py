@@ -7,7 +7,6 @@ def natural_sort_key(file_name):
     """
     提取文件名中的数字部分，按自然顺序排序。
     """
-    # 使用正则表达式分割文件名中的数字部分
     return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', file_name)]
 
 def create_pdf_from_images(folder_path):
@@ -31,12 +30,14 @@ def create_pdf_from_images(folder_path):
     for img_path in image_files:
         print(f"正在处理图片: {img_path}")  # 打印当前处理的图片，方便调试
         img = Image.open(img_path)
+        
+        # 保持图片的质量：转换为 RGB 并确保图片质量
         if img.mode != 'RGB':  # 转换为RGB模式，避免错误
             img = img.convert('RGB')
         image_list.append(img)
 
-    # 保存为PDF
-    image_list[0].save(output_pdf_path, save_all=True, append_images=image_list[1:])
+    # 保存为PDF，确保高质量 JPG 图像保存，设置 quality 参数减少压缩损失
+    image_list[0].save(output_pdf_path, save_all=True, append_images=image_list[1:], quality=95, optimize=True)
     print(f'PDF 已成功生成，路径为: {output_pdf_path}')
 
 if __name__ == "__main__":
