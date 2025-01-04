@@ -28,3 +28,6 @@ else:
     # 保存为PDF
     image_list[0].save(output_pdf_path, save_all=True, append_images=image_list[1:])
     print(f'PDF 已成功生成，路径为: {output_pdf_path}')
+    
+    
+#最好根据实际情况来
